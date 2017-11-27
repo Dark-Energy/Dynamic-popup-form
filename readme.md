@@ -47,7 +47,7 @@ Object params have to contain some keys.
 
 ### Select ###
 
-select - will be created <select> element.
+select - will be created ```<select>``` element.
 
 Initial values must be in 'value' key:
 
