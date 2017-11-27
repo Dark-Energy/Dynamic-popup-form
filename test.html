@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+      <link rel="stylesheet" type="text/css" href="dynamic-popup-form.css"  />
+      <script type="text/javascript" src="dynamic-popup-form.js"> </script>
+      
+</head>
+
+<body>
+
+
+<button type="button" id="test_text"> Text input (one line text) </button>
+<button type="button" id="test_label"> Label </button>
+<button type="button" id="test_textarea"> Textarea (Multiline text) </button>
+<button type="button" id="test_file"> File input </button>
+<button type="button" id="test_select"> Select </button>
+<button type="button" id="test_field_list"> Multi fields form</button>
+
+
+<div id="output">
+</div>
+
+<script>
+
+var output = document.getElementById("output");
+
+function print(text)
+{
+    output.innerHTML = text;
+}
+
+
+
+var tests  = {
+    test_text: function (event) {
+        console.log("Button is pressed");
+        var params = {
+            "type": "text",
+            "value": "Some text",
+            handler: function (value) {
+                print("Test text. User click ok button. Get value is " + value);
+            }
+        };
+      	var form = new PopupForm(params);
+        form.show();
+    },
+    test_label: function (event) {
+        var params = {
+            "type": "label",
+            "value": "Some text",
+            handler: function (value) {
+                print("Test label. User press OK button. What is value? " + value);
+            }
+        }
+      	var form = new PopupForm(params);
+        form.show();
+    },
+    test_textarea: function (e) {
+        var params = {
+            "type": "textarea",
+            "value": "There is so many text, \n so it not packed in one line",
+            handler: function (value) {
+                print("Test textarea. User press Ok button. Value is " + value);
+            }
+        }
+      	var form = new PopupForm(params);
+        form.show();
+    },
+    test_file: function (e) {
+        var params = {
+            "type": "file",
+            handler: function (value) {
+                print ("Testing file input. User press Ok button. There is value " + value);
+            }
+        }
+      	var form = new PopupForm(params);
+        form.show();
+    },
+    test_select: function (e) {
+        var params = {
+            "type": "select",
+            "options": {
+                "value_one": "Text one",
+                "value_two": "Text two",
+                "value_tree": "Text tree"
+            },
+            "value" : "value_tree",
+            handler: function (value) {
+                print( "Testing select element. User press Ok button. Value is " + value);
+            }
+        }
+      	var form = new PopupForm(params);
+        form.show();
+        
+    },
+    test_field_list: function (e) {
+        var params = {
+            fields : [
+                {
+                    "type": "label",
+                    value: "Confirmation",
+                },
+                {
+                    "type": "text",
+                    value: "Some text",
+                    "data-value": "name",
+                },
+                {
+                    "type": "select",
+                    "options": {
+                        "apple": "Apple",
+                        "big_apple": "Big Apple",
+                        "pinapple": "Pinapple"
+                    },
+                    value: "pinapple",
+                    "data-value": "sort"
+                },
+                {
+                    "type": "label",
+                    "value": "Comment"
+                },
+                {
+                    "type": "textarea",
+                    "data-value": "comment"
+                },
+                {
+                    "type": "checkbox",
+                    "text": "i like it!",
+                    "data-value": "like"
+                }
+            ],
+            handler: function (value) {
+                print("Testing list of fields. There is " + JSON.stringify(value, null, ' '));
+            }
+        }
+      	var form = new PopupForm(params);
+        form.show();
+    }
+};
+
+
+function bind_clicks() {
+    for(var key in tests) {
+        if (Object.prototype.hasOwnProperty.call(tests, key)) {
+            console.log("bind " + key);            
+            var btn = document.getElementById(key);
+            btn.onclick = tests[key];
+        }
+    }
+}
+
+bind_clicks();
+
+</script>
+</body>

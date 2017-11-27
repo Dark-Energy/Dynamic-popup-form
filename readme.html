@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+</head>
+
+<body>
+
+<h1>Dynamic-popup-form</h1>
+<p>This is module to create dynamic dialog form which asking user for data. Now allowed text input, file input, textarea, select and label text. It is completely independent and don’t require depencencies neither on frameworks nor libraryes.</p>
+<h1>Using in browser</h1>
+<p>To use in browser just add dynamic-popup-form.js with <code>&lt;script&gt;</code> tag and dynamic-popup-form.css in <code>&lt;style&gt;</code> tag.</p>
+<h1>Using with bundlers (Webpack, Rollup etc)</h1>
+<p>I didn’t try yet, but i suppose this can work.</p>
+<h1>Styles</h1>
+<p>All styles containing in file dynamic-popup-form.css. This is for convient to customize. You can edit this styles, bundle it etc.</p>
+<h1>Documentation</h1>
+<p>Dynamic Popup Form Dialog is created be class PopupForm with particular parameters. These parameters is a object, containing description needed to create dialog. Method ‘show’ show the created dialog. Dialog window have two buttons ‘Ok’ and ‘Cancel’. Object parameters have to provide two methods to deal with user choise. One method is invoked when user clicks ‘Ok’ and second method is invoked when user clicks ‘cancel’.</p>
+<pre class="hljs"><code>	var params = 
+	{
+		'type': 'label', 
+		value: 'You really want to destroy this?', 
+		handler: function (value) 
+		{
+			Destroy();
+		}
+	};
+
+
+	var form = new PopupForm(params);
+	form.show();
+</code></pre>
+<h3>Input types</h3>
+<p>Object params have to contain some keys.</p>
+<ul>
+<li>type - type of html input DOM element. Now following types is accepted:</li>
+</ul>
+<ul>
+<li>label - will be created <code>&lt;label&gt;</code> html element. This is convieced for confirmation dialogs.</li>
+<li>text - will be created <code>&lt;input type='text'&gt;</code> element.</li>
+<li>file - will be created <code>&lt;input type=&quot;file&quot;&gt;</code> element.</li>
+</ul>
+<h3>Select</h3>
+<p>select - will be created &lt;select&gt; element.</p>
+<p>Initial values must be in ‘value’ key:</p>
+<p>Creating dialog containing text label and two buttons ‘Ok’ and ‘Cance’.</p>
+<pre class="hljs"><code>var params
+{
+    'type': 'label',
+    'value': 'Some text?'
+}
+</code></pre>
+<p>Creating dialog with text input field</p>
+<pre class="hljs"><code>var params
+{
+    'type': 'text',
+    'value': 'Some text'
+}
+</code></pre>
+<p>Creating dialog with text textarea</p>
+<pre class="hljs"><code>var params
+{
+    'type': 'textarea',
+    'value': 'Some text'
+}
+</code></pre>
+<p>When ‘type’ is ‘select’ you have to provide set of option in ‘options’ key. This key can be either array or object. Keys of object set attribute ‘value’ of ‘option’ html element. Values set text in option html element. Key ‘value’ can contain initial selected element.</p>
+<p>This parameters</p>
+<pre class="hljs"><code>var params 
+{
+    'type': 'select',
+    'options': {
+        'option value 1': 'option name 1',
+        'option value 2': 'option name 2'
+    },
+    value: 'option name 1',
+}
+</code></pre>
+<p>result in:</p>
+<pre class="hljs"><code>&lt;select&gt;
+&lt;option value=&quot;option value 1&quot; selected&gt;option name 1&lt;/option&gt;
+&lt;option value=&quot;option value 2&quot;&gt;option name 2&lt;/option&gt;
+&lt;/select&gt;
+</code></pre>
+<p>Or can use array. Then option value and option text will be same.</p>
+<pre class="hljs"><code>var params 
+{
+    'type': 'select',
+    'options': [
+        'option 1', 'option 2'
+    ],
+    value: 'option 1'
+}
+
+&lt;select&gt;
+&lt;option value=&quot;option 1&quot; selected&gt;option 1&lt;/option&gt;
+&lt;option value=&quot;option 2&quot;&gt;option 2&lt;/option&gt;
+&lt;/select&gt;
+
+</code></pre>
+<h3>List of fields</h3>
+<p>There is can use list of fields if one fields is not enough. Descriptions of fields are set in key ‘fields’. It is array of object like this:</p>
+<pre class="hljs"><code>var params {
+    fields : [
+        {
+        type: select,
+        options : 
+            {
+                &quot;one&quot;: &quot;1&quot;,
+                &quot;two&quot;: &quot;2&quot;
+            }
+        value: &quot;1&quot;
+        &quot;data-value&quot;: &quot;tag&quot;
+        },
+        {
+            type: text,
+            &quot;data-value&quot;: &quot;comment&quot;
+        }
+    ],
+    handler : function (value) {
+        console.log(JSON.stringify(value));
+    }
+}
+</code></pre>
+<p>This print some like</p>
+<pre class="hljs"><code>{ 
+    &quot;tag&quot;: &quot;1&quot;,
+    &quot;comment&quot;: &quot;some text&quot;
+}
+</code></pre>
+<p>Each object in ‘fields’ array contain keys - type, value, options, etc, which is need to field of this type. Argument ‘value’ passed in ‘handler’ contain object, where keys are ‘data-value’ value.</p>
+
+
+</body>
+
+</html>

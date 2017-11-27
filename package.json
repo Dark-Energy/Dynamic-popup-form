@@ -1,0 +1,17 @@
+{
+  "name": "dynamic-popup-form",
+  "version": "1.0.0",
+  "description": "popup dialog with dynamic form",
+  "main": "dynamic-popup-form.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "dynamic",
+    "form",
+    "popup",
+    "dialog"
+  ],
+  "author": "iamdarkenergy",
+  "license": "MIT"
+}
